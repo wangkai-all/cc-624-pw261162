@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>闸机通道分流模拟 · 预先分流 vs 动态切换</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="viz-root">
+    <header class="page-header">
+      <h1>闸机通道分流模拟</h1>
+      <p class="subtitle">按秒到场 · 入场后通道固定 · 临时关闸影响排队 · 路线分配与事件回放共享同一容量版本</p>
+      <dl class="scenario-meta" id="scenario-meta">
+    <div><dt>场景</dt><dd id="meta-scenario">加载中…</dd></div>
+        <div><dt>容量版本</dt><dd id="meta-version">—</dd></div>
+        <div><dt>模拟时长</dt><dd id="meta-horizon">—</dd></div>
+        <div><dt>闸机能力</dt><dd id="meta-gates">—</dd></div>
+      </dl>
+    </header>
+
+    <section class="controls" aria-label="模拟操作">
+      <div class="control-group">
+        <button id="btn-replay" class="btn" type="button">回放原入场安排</button>
+        <button id="btn-compare" class="btn btn-primary" type="button">关闭一条通道再重开（双策略对比）</button>
+        <button id="btn-queues" class="btn" type="button">查看各队列等待</button>
+      </div>
+      <div class="control-group options">
+        <label>关哪条通道
+          <select id="closure-gate"></select>
+        </label>
+        <label>关闭秒
+          <input id="close-at" type="number" min="0" value="10" />
+        </label>
+        <label>重开秒
+          <input id="reopen-at" type="number" min="1" value="16" />
+        </label>
+        <label>查看队列策略
+          <select id="queue-strategy">
+            <option value="preset">预先分流</option>
+            <option value="dynamic">动态切换</option>
+          </select>
+        </label>
+      </div>
+    </section>
+
+    <div id="error-box" class="error-box" role="alert" hidden></div>
+
+    <!-- 业务结果区：所有操作的真实处理结果都渲染进这里 -->
+    <main id="result" data-evidence-result data-state="empty" aria-live="polite">
+      <p class="empty-hint">尚未执行操作。点击上方按钮，数据将经服务端真实模拟后展示在这里。</p>
+    </main>
+
+    <footer class="page-footer">
+      <p>离散秒级模拟：一秒内依次处理「到场 → 路线分配（入场，通道终身固定）→ 开放闸机按能力 FIFO 服务」。
+      关闸区间 [关闭秒, 重开秒) 内该通道零服务，重开当秒恢复。</p>
+    </footer>
+  </div>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

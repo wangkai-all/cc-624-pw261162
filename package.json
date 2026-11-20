@@ -1,0 +1,15 @@
+{
+  "name": "gate-route-sim",
+  "version": "1.0.0",
+  "description": "闸机通道分流模拟：预先分流 vs 动态切换，路线分配与事件回放共享容量版本",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT"
+}
